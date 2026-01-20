@@ -1,7 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import useDebounce from "../hooks/useDebounce";
 
-export default function Navbar() {
+export default function NavBar() {
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const q = debouncedSearch.trim();
+
+    if (q) {
+      setSearchParams({ query: q });
+    } else {
+      setSearchParams({});
+    }
+  }, [debouncedSearch, setSearchParams]);
 
   return (
     <header style={styles.header}>
@@ -21,22 +36,25 @@ export default function Navbar() {
 const styles = {
   header: {
     display: "flex",
-    gap: "12px",
     alignItems: "center",
     justifyContent: "space-between",
     padding: "12px 16px",
     borderBottom: "1px solid #eee",
     position: "sticky",
     top: 0,
-    background: "white",
+    backgroundColor: "white",
     zIndex: 10,
   },
-  logo: { margin: 0, fontSize: "18px" },
+  logo: {
+    margin: 0,
+    fontSize: "18px",
+    fontWeight: "bold",
+  },
   input: {
     width: "240px",
     padding: "10px 12px",
-    borderRadius: "10px",
-    border: "1px solid #ddd",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
     outline: "none",
   },
 };
