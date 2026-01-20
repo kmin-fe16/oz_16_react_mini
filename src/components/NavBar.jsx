@@ -1,49 +1,42 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 
-export default function NavBar() {
+export default function Navbar() {
+  const [search, setSearch] = useState("");
+
   return (
     <header style={styles.header}>
-      <div style={styles.inner}>
-        <Link to="/" style={styles.logo}>
-          OZ무비
-        </Link>
+      <h1 style={styles.logo}>OZ Movie</h1>
 
-        <nav style={styles.nav}>
-          <Link to="/" style={styles.link}>
-            홈
-          </Link>
-          <Link to="/details" style={styles.link}>
-            상세
-          </Link>
-        </nav>
-      </div>
+      <input
+        style={styles.input}
+        type="text"
+        placeholder="영화 제목으로 검색..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
     </header>
   );
 }
 
 const styles = {
   header: {
-    position: "sticky",
-    top: 0,
-    zIndex: 10,
-    background: "#111",
-    color: "white",
-    borderBottom: "1px solid #222",
-  },
-  inner: {
-    maxWidth: 1200,
-    margin: "0 auto",
-    padding: "14px 20px",
     display: "flex",
+    gap: "12px",
     alignItems: "center",
     justifyContent: "space-between",
+    padding: "12px 16px",
+    borderBottom: "1px solid #eee",
+    position: "sticky",
+    top: 0,
+    background: "white",
+    zIndex: 10,
   },
-  logo: {
-    color: "white",
-    textDecoration: "none",
-    fontWeight: 800,
-    fontSize: 18,
+  logo: { margin: 0, fontSize: "18px" },
+  input: {
+    width: "240px",
+    padding: "10px 12px",
+    borderRadius: "10px",
+    border: "1px solid #ddd",
+    outline: "none",
   },
-  nav: { display: "flex", gap: 14 },
-  link: { color: "white", textDecoration: "none", opacity: 0.9 },
 };
